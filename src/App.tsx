@@ -6,6 +6,7 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
+  updateProfile,
 } from "./utils/firebase";
 import type { User } from "firebase/auth";
 import { LoadingAnimation } from "./components/LoadingAnimation";
@@ -42,7 +43,7 @@ function App() {
     }
   };
 
-  const register = async () => {
+  const registerEmailPass = async () => {
     try {
       setRegisterIsLoading(true);
       const check = await createUserWithEmailAndPassword(
@@ -51,6 +52,11 @@ function App() {
         registerDetails?.password
       );
       const user: User = check.user;
+
+      await updateProfile(user, {
+        displayName: registerDetails?.name,
+      });
+
       setUser(user);
     } catch (err) {
       console.error(err);
@@ -62,7 +68,7 @@ function App() {
     }
   };
 
-  const login = async () => {
+  const loginEmailPass = async () => {
     try {
       setLoginIsLoading(true);
       const check = await signInWithEmailAndPassword(
@@ -81,6 +87,22 @@ function App() {
       setLoginIsLoading(false);
     }
   };
+
+   const setupRecaptcha = () => {
+    if (!window.recaptchaVerifier) {
+      window.recaptchaVerifier = new RecaptchaVerifier('recaptcha', {
+        size: 'invisible',
+      }, auth);
+    }
+  };
+
+  const phoneAuth = () => {
+    try {
+
+    } catch (err) {
+
+    }
+  }
 
   return (
     <main className="h-screen w-full p-10">
@@ -154,7 +176,7 @@ function App() {
             ) : (
               <button
                 className="bg-black text-white rounded-xl p-2 cursor-pointer hover:bg-gray-600 duration-300 mt-5 w-full"
-                onClick={register}
+                onClick={registerEmailPass}
               >
                 Register
               </button>
@@ -198,7 +220,7 @@ function App() {
             ) : (
               <button
                 className="bg-black text-white rounded-xl p-2 cursor-pointer hover:bg-gray-600 duration-300 mt-5 w-full"
-                onClick={login}
+                onClick={loginEmailPass}
               >
                 Login
               </button>

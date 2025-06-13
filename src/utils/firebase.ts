@@ -6,6 +6,9 @@ import {
   signInWithPopup,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
+  signInWithPhoneNumber,
+  RecaptchaVerifier,
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -28,4 +31,7 @@ export {
   signInWithPopup,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
+  signInWithPhoneNumber,
+  RecaptchaVerifier,
 };
