@@ -34,6 +34,7 @@ const authentication = () => {
       const provider = new GoogleAuthProvider();
       const resp = await signInWithPopup(auth, provider);
       const user: User = resp.user;
+      localStorage.setItem("user", JSON.stringify(user));
       setUser(user);
     } catch (err) {
       console.error(err);

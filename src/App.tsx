@@ -1,7 +1,9 @@
 import "./App.css";
-import Authentication from "./pages/Authentication";
-import CRUD from "./pages/CRUD";
-import Storage from "./pages/Storage";
+import Authentication from "./pages/authentication";
+import CRUD from "./pages/crud";
+import Functions from "./pages/functions";
+import Realtime from "./pages/realtime";
+import Storage from "./pages/storage";
 
 function App() {
   return (
@@ -11,6 +13,8 @@ function App() {
         <Authentication />
         <CRUD />
         <Storage />
+        <Realtime />
+        <Functions />
       </div>
     </main>
   );
