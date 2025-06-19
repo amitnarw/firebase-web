@@ -20,7 +20,7 @@ const firebaseConfig = {
   authDomain: "demo-test.firebaseapp.com",
   projectId: "demo-test",
   storageBucket: "demo-test.appspot.com",
-  databaseURL: "http://127.0.0.1:9000",
+  databaseURL: "http://127.0.0.1:9000/?ns=fake-server",
 };
 
 const app = initializeApp(firebaseConfig);
