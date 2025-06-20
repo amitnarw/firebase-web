@@ -83,7 +83,7 @@ const Realtime = () => {
     onValue(messagesRef, (snapshot) => {
       const allMessages = snapshot.val();
       const sortedMessages = Object.entries(allMessages)
-        .map(([id, msg]) => ({ id, ...msg }))
+        .map(([id, msg]) => ({ id, ...(msg as any) }))
         .sort((a, b) => a.timestamp - b.timestamp);
       setChatMessages(sortedMessages);
     });
@@ -120,17 +120,17 @@ const Realtime = () => {
       );
       return;
     }
-    let chatDetails;
+    let chatDetails: { key: string } | undefined;
     if (user?.uid) {
       setIsAddingNewChatLoading(true);
       const chatRef = ref(realtime, `chats`);
-      chatDetails = await push(chatRef, {
+      chatDetails = (await push(chatRef, {
         type: "private",
         members: {
           [user?.uid]: true,
           [selectedUser?.id]: true,
         },
-      });
+      })) as { key: string };
     }
 
     if (chatDetails) {
@@ -145,7 +145,7 @@ const Realtime = () => {
       });
     }
 
-    const messageRef = ref(realtime, `messages/${chatDetails.key}`);
+    const messageRef = ref(realtime, `messages/${chatDetails?.key}`);
     await push(messageRef, {
       text: newMessage,
       sender: user?.uid,
@@ -162,7 +162,7 @@ const Realtime = () => {
         <div className="border border-gray-300 rounded-xl p-4">
           <div className="flex flex-row items-center justify-between mb-1 gap-2">
             <p className="text-purple-500">All Chats</p>
-            <p>Total Chats: {Object.keys(chats)?.length}</p>
+            <p>Total Chats: {chats && Object.keys(chats)?.length}</p>
           </div>
 
           {isChatsLoading ? (
